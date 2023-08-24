@@ -56,11 +56,9 @@ const FileUpload = () => {
       formData.append("file", file);
 
       try {
-        // Simulate an upload delay
+      
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
-        // Here you would make an actual API request to upload the file
-        // Update the progress as needed
 
         setProgress(progress + 100 / selectedFiles.length);
       } catch (error) {
