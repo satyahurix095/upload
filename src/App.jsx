@@ -6,9 +6,9 @@ export default function App() {
   return (
     <div className="Max-container">
       <div className="link-block">
-      <Link to="/">Home</Link>
-      <br />
-      <Link to="/uploadfiles">Upload</Link>
+        <Link to="/">Home</Link>
+        <br />
+        <Link to="/uploadfiles">Upload</Link>
       </div>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -22,12 +22,11 @@ function Home() {
   return (
     <div>
       <br />
-
       <br />
       <h1>Welcome home sir!</h1>
       <img
         src="https://i.pinimg.com/originals/bd/da/fc/bddafc029d86df72bef91bba70973c71.jpg"
-        alt="welcome image"
+        alt="welcome"
       />
     </div>
   );
@@ -47,12 +46,13 @@ const FileUpload = () => {
     "image/webp",
   ];
   const maxFileSize = 5 * 1024 * 1024;
-  
+
   const handleFileChange = (event) => {
     setError("");
     const files = Array.from(event.target.files);
     const selected = files.filter(
-      (file) => allowedFormats.includes(file.type) && file.size <= maxFileSize
+      (file) =>
+        allowedFormats.includes(file.type) && file.size <= maxFileSize
     );
 
     if (selected.length > 0) {
@@ -62,12 +62,19 @@ const FileUpload = () => {
     }
   };
 
+  const handleRemoveFile = (index) => {
+    const updatedFiles = [...selectedFiles];
+    updatedFiles.splice(index, 1);
+    setSelectedFiles(updatedFiles);
+  };
+
   const handleDrop = (event) => {
     event.preventDefault();
     setError("");
     const files = Array.from(event.dataTransfer.files);
     const selected = files.filter(
-      (file) => allowedFormats.includes(file.type) && file.size <= maxFileSize
+      (file) =>
+        allowedFormats.includes(file.type) && file.size <= maxFileSize
     );
 
     if (selected.length > 0) {
@@ -123,7 +130,15 @@ const FileUpload = () => {
         <div className="selected-files">
           {selectedFiles.map((file, index) => (
             <div key={index} className="file-item">
-              {file.name}
+              <div className="file-info">
+                {file.name}
+                <button
+                  className="remove-button"
+                  onClick={() => handleRemoveFile(index)}
+                >
+                  Remove
+                </button>
+              </div>
             </div>
           ))}
         </div>
